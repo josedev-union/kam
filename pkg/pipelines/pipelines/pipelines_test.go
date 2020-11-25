@@ -67,6 +67,9 @@ func TestCreateAppCIPipeline(t *testing.T) {
 				"COMMIT_AUTHOR",
 				"COMMIT_MESSAGE",
 				"GIT_REPO"),
+			Workspaces: []pipelinev1.PipelineWorkspaceDeclaration{
+				{Name: pipelineWorkspace, Description: "This workspace will receive the cloned git repo."},
+			},
 			Tasks: []pipelinev1.PipelineTask{
 
 				{
@@ -76,7 +79,7 @@ func TestCreateAppCIPipeline(t *testing.T) {
 						createTaskParam("url", "$(params.GIT_REPO)"),
 						createTaskParam("revision", "$(params.GIT_REF)"),
 					},
-					Workspaces: []pipelinev1.WorkspacePipelineTaskBinding{{Name: "output", Workspace: "shared-data"}},
+					Workspaces: []pipelinev1.WorkspacePipelineTaskBinding{{Name: "output", Workspace: pipelineWorkspace}},
 				},
 
 				{

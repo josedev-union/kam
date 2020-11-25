@@ -39,6 +39,9 @@ func CreateAppCIPipeline(name types.NamespacedName) *pipelinev1.Pipeline {
 				createGitCloneTask("clone-source"),
 				createBuildImageTask("build-image", "clone-source"),
 			},
+			Workspaces: []pipelinev1.PipelineWorkspaceDeclaration{
+				{Name: pipelineWorkspace, Description: "This workspace will receive the cloned git repo."},
+			},
 		},
 	}
 }
